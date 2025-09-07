@@ -1,9 +1,9 @@
 from fastapi import Depends , APIRouter, HTTPException, Path
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from database import get_async_db
-from app.models.message import MessageModel  
-from app.schemas.message import MessageSchema   
+from database import get_async_db#type:ignore
+from app.models.message import MessageModel  #type:ignore
+from app.schemas.message import MessageSchema   #type:ignore
 
 
 router = APIRouter() 

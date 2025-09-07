@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import Optional
 
 
@@ -57,10 +57,15 @@ class Product(BaseModel): #RESPONSE MODEL
     model_config = ConfigDict(from_attributes=True)
 
 
-class UserSchema(BaseModel):
-    id: int
-    username: str
-    email: str
-    is_active: bool
+class UserCreate(BaseModel):
+    email: EmailStr = Field(description="Email пользователя")
+    password: str = Field(min_length=8, description="Пароль (минимум 8 символов)")
+    role: str = Field(default="buyer", pattern=r"^(buyer|seller)$", description="Роль: 'buyer' или 'seller'")
 
-    model_config = ConfigDict(from_attributes=True)        
+
+class User(BaseModel):
+    id: int
+    email: EmailStr 
+    is_active: bool
+    role: str
+    model_config = ConfigDict(from_attributes=True)
