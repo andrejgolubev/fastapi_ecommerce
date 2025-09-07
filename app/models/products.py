@@ -3,9 +3,11 @@ from typing import TYPE_CHECKING
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
-# Для аннотаций типов
-if TYPE_CHECKING:
+
+if TYPE_CHECKING: # Для аннотаций типов
     from .categories import Category
+    from app.models import User
+
 
 class Product(Base):
     __tablename__ = "products"
@@ -21,9 +23,14 @@ class Product(Base):
 
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'))
 
+    seller_id: Mapped[str] = mapped_column(ForeignKey('users.id'), nullable=False)
+
+
     category: Mapped["Category"] = relationship(
         'Category',
         back_populates='products'
     )
+
+    seller: Mapped["User"] = relationship(back_populates='products')
 
 
