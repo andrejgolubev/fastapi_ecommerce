@@ -164,3 +164,9 @@ async def restore_product(product_id: int = Path(),
     await db.commit() 
 
     return {"message": f"Product {product.name} has been marked as active"}
+
+# from ..useless import generate_beliberda
+
+# @router.get('/xueta')
+# def generate(dep: str = Depends(generate_beliberda)): 
+#     return dep
