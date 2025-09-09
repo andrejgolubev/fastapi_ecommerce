@@ -16,6 +16,8 @@ class Review(Base):
     product_id: Mapped[int] = mapped_column(ForeignKey('products.id'))
     comment: Mapped[str] = mapped_column(Text, nullable=True)
     comment_date: Mapped[datetime] = mapped_column(default=datetime.now) 
+    grade: Mapped[int] = mapped_column(nullable=False)
+    is_active: Mapped[bool] = mapped_column(default=True)   
 
     user: Mapped['User'] = relationship(back_populates='review')
     product: Mapped['Product'] = relationship(back_populates='review')

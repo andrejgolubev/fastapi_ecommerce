@@ -69,3 +69,17 @@ class User(BaseModel):
     is_active: bool
     role: str
     model_config = ConfigDict(from_attributes=True)
+
+class ReviewCreate(BaseModel): 
+    product_id: int
+    comment: str | None
+    grade: int = Field(ge=0, le=5)
+    
+class ReviewRespond(BaseModel): 
+    id: int
+    user_id: int
+    product_id: int
+    comment: str
+    comment_date: str
+    grade: int = Field(min_length=1, max_length=5)
+    is_active: bool
