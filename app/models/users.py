@@ -8,12 +8,12 @@ if TYPE_CHECKING:
 class User(Base):
     __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    hashed_password: Mapped[str] = mapped_column(String, nullable=False)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    role: Mapped[str] = mapped_column(String, default="buyer")  # "buyer" or "seller"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(unique=True, index=True, nullable=False)
+    hashed_password: Mapped[str] = mapped_column(nullable=False)
+    is_active: Mapped[bool] = mapped_column(default=True)
+    role: Mapped[str] = mapped_column(default="buyer") 
     
     
     products: Mapped[list["Product"]] = relationship(back_populates="seller")
-    review: Mapped['Review'] = relationship(back_populates='product')
+    review: Mapped['Review'] = relationship(back_populates='user')

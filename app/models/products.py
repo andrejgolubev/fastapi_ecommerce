@@ -5,8 +5,7 @@ from app.database import Base
 
 
 if TYPE_CHECKING: # Для аннотаций типов
-    from .categories import Category
-    from app.models import User
+    from app.models import User, Review, Category
 
 
 class Product(Base):
@@ -21,6 +20,9 @@ class Product(Base):
     image_url: Mapped[str | None] = mapped_column(String(200), nullable=True)
     stock: Mapped[int] = mapped_column(Integer, nullable=False)
 
+    
+    rating: Mapped[float] = mapped_column(nullable=True, default=None)
+
     category_id: Mapped[int] = mapped_column(ForeignKey('categories.id'))
 
     seller_id: Mapped[str] = mapped_column(ForeignKey('users.id'), nullable=False)
@@ -32,5 +34,7 @@ class Product(Base):
     )
 
     seller: Mapped["User"] = relationship(back_populates='products')
+
+    review: Mapped[list['Review']] = relationship(back_populates='product')
 
 

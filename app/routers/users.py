@@ -15,13 +15,14 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.post("/", response_model=UserSchema, status_code=status.HTTP_201_CREATED)
-async def create_user(user: UserCreate, db: AsyncSession = Depends(get_async_db)):
+async def create_user(user: UserCreate, 
+                      db: AsyncSession = Depends(get_async_db)):
     """
     Регистрирует нового пользователя с ролью 'buyer' или 'seller'.
     """
     # Проверка уникальности email
-    result = await db.scalars(select(UserModel).where(UserModel.email == user.email))
-    if result.first():
+    user_result = await db.scalars(select(UserModel).where(UserModel.email == user.email))
+    if user_result.first():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Email already registered")
 
